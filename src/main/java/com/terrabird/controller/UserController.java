@@ -5,10 +5,10 @@ import com.terrabird.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,4 +32,22 @@ public class UserController {
         }
         return userList;
     }
+
+    @RequestMapping(value = "/createUser", method = RequestMethod.PUT)
+    public ResponseEntity<TBUser> addUser(@RequestBody TBUser tbUser) {
+        if(null != tbUser) {
+            userService.addUser(tbUser);
+        }
+        return new ResponseEntity<TBUser>(tbUser, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/updatePassword", method = RequestMethod.PUT)
+    public ResponseEntity<TBUser> updatePassword(@RequestBody TBUser tbUser) {
+        if(null != tbUser) {
+            userService.updatePassword(tbUser);
+        }
+        return new ResponseEntity<TBUser>(tbUser, HttpStatus.OK);
+    }
+
+
 }
