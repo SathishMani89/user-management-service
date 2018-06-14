@@ -1,5 +1,7 @@
 package com.terrabird.controller;
 
+import com.terrabird.persistence.ContactDetails;
+import com.terrabird.persistence.Quote;
 import com.terrabird.persistence.TBUser;
 import com.terrabird.service.UserService;
 import org.slf4j.Logger;
@@ -11,6 +13,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Praveer Das
@@ -33,7 +36,7 @@ public class UserController {
         return userList;
     }
 
-    @RequestMapping(value = "/createUser", method = RequestMethod.PUT)
+    @RequestMapping(value = "/registerUser", method = RequestMethod.PUT)
     public ResponseEntity<TBUser> addUser(@RequestBody TBUser tbUser) {
         if(null != tbUser) {
             userService.addUser(tbUser);
@@ -47,6 +50,16 @@ public class UserController {
             userService.updatePassword(tbUser);
         }
         return new ResponseEntity<TBUser>(tbUser, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/user/contact/{userId}", method = RequestMethod.GET)
+    public Set<ContactDetails> getUserContactDetailsById(@PathVariable String userId) {
+        return userService.getUserContactDetails(userId);
+    }
+
+    @RequestMapping(value = "/quotes/{userId}", method = RequestMethod.GET)
+    public Set<Quote> getAllQuotesByUserId(@PathVariable String userId) {
+        return userService.getAllQuotesByUserId(userId);
     }
 
 

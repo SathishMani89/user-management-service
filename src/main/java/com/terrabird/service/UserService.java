@@ -1,15 +1,17 @@
 package com.terrabird.service;
 
 import com.terrabird.dao.UserDAO;
+import com.terrabird.persistence.ContactDetails;
+import com.terrabird.persistence.Quote;
 import com.terrabird.persistence.TBUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.DigestUtils;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Praveer Das
@@ -52,4 +54,14 @@ public class UserService {
         }
         return hexString.toString();
     }
+
+    public Set<ContactDetails> getUserContactDetails(String userId) {
+        return userDAO.getUserContactDetails(userId);
+    }
+
+    public Set<Quote> getAllQuotesByUserId(String userId) {
+        return userDAO.getAllQuotesByUserId(userId);
+    }
+
+
 }
